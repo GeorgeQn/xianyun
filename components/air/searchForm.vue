@@ -87,7 +87,10 @@ export default {
             params:this.form
         }).then(res=>{
             console.log(123)
-            this.$router.push()
+            this.$router.push({
+                path:'/air/fights',
+                query:this.form
+            })
         })
     },
 
