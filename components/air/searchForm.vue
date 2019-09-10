@@ -59,9 +59,9 @@ export default {
       ],
       currentTab: 0,
       form: {
-        departCity: "",
+        departCity: "上海",
         departCode: ".",
-        destCity: "",
+        destCity: "广州",
         destCode: "",
         departDate: ""
       }
@@ -82,11 +82,29 @@ export default {
     handleSubmit() {
       //搜索
         // console.log(this.form)
+        const {departCity, destCity, departDate} = this.form;
+            // 判断输入框不能为空
+            if(!departCity){
+                this.$alert("出发城市不能为空", "提示");
+                return;
+            }
+            if(!destCity){
+                this.$alert("到达城市不能为空", "提示");
+                return;
+            }
+            if(!departDate){
+                this.$alert("出发日期不能为空", "提示");
+                return;
+            }
+        const arr = JSON.parse(localStorage.getItem("airs")) || [];
+        arr.push(this.form);
+            // 把搜索的条件保存到本地
+        localStorage.setItem("airs", JSON.stringify(arr));
+
         this.$axios({
             url:'/airs',
             params:this.form
         }).then(res=>{
-            console.log(123)
             this.$router.push({
                 path:'/air/fights',
                 query:this.form

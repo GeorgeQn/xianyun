@@ -4,7 +4,7 @@
       <el-input placeholder="用户名/手机" v-model="form.username"></el-input>
     </el-form-item>
     <el-form-item class="form-item" prop="password">
-      <el-input placeholder="密码" v-model="form.password"></el-input>
+      <el-input placeholder="密码" v-model="form.password" type="password"></el-input>
     </el-form-item>
 
     <p class="form-text">
@@ -43,6 +43,13 @@ export default {
             }).then(res=>{
                 console.log(res)
                 this.$store.commit('user/setUserInfo',res.data)
+                this.$message({
+                  message:'成功登录,正在为你跳转到首页',
+                  type:'success'
+                })
+                this.$router.push({
+                  path:'/'
+                })
             }).catch(err=>{
               console.log(err)
             })

@@ -46,7 +46,7 @@ export default {
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
-      } else if (value !== this.registerForm.passpassword) {
+      } else if (value !== this.registerForm.password) {
         callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
@@ -90,21 +90,27 @@ export default {
     },
 
     handleResgisterSubmit() {
+      console.log(123)
       this.$refs.registerForm.validate(valid => {
         if (valid) {
+          //...+变量名指向剩余的属性
+          const {currentpassword, ...rest}=this.registerForm
           this.$axios({
             url: "/accounts/register",
             method: "POST",
-            data: this.registerForm
+            data: rest
           }).then(res => {
             this.$store.commit("user/setUserInfo", res.data)
+            // this.$router.push({path:'/'})
+            // this.$message({
+            //   type:'success',
+            //   message:'注册成功,正在为你跳转到首页'
+            // })
           });
         }
       });
     }
   },
-
-  mounted() {}
 };
 </script>
 
